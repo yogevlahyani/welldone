@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 // Redux
 import { connect } from 'react-redux';
-import { fetch } from '../actions/category';
+import { fetch, del } from '../actions/category';
 
 // Components
 import AddCategory from './add-category.component.js';
@@ -50,7 +50,8 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = dispatch => {
 	return {
         actions: {
-            fetch: () => dispatch(fetch())
+            fetch: () => dispatch(fetch()),
+            del: (index) => dispatch(del(index))
         }
     };
 };

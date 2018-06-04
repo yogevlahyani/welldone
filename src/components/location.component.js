@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 // Redux
 import { connect } from 'react-redux';
-import { fetch } from '../actions/location';
+import { fetch, del } from '../actions/location';
 
 // Components
 import AddLocation from './add-location.component';
@@ -45,7 +45,8 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = dispatch => {
 	return {
         actions: {
-            fetch: () => dispatch(fetch())
+            fetch: () => dispatch(fetch()),
+            del: (index) => dispatch(del(index))
         }
     };
 };

@@ -18,3 +18,12 @@ export const add = (name) => {
         });
 	}
 };
+
+export const del = (index) => {
+	return (dispatch) => {
+		dispatch({
+            type: Actions.CATEGORY.DELETE,
+            data: index
+        });
+	}
+};

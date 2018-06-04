@@ -30,7 +30,6 @@ class AddLocation extends Component {
     }
 
     handleChange = (field, e) => {
-        console.log(field, e.target.value);
         this.setState({
             [field]: e.target.value
         });
@@ -39,15 +38,15 @@ class AddLocation extends Component {
     handleErrors = () => {
         const { name, address, lat, lng, category } = this.state;
         let errors = [false, false, false, false, false];
-        if (_.isEmpty(name)) { errors[0] = true }
-        if (_.isEmpty(address)) { errors[1] = true }
-        if (_.isEmpty(lat)) { errors[2] = true }
-        if (_.isEmpty(lng)) { errors[3] = true }
-        if (_.isEmpty(category)) { errors[4] = true }
+        errors[0] = _.isEmpty(name);
+        errors[1] = _.isEmpty(address);
+        errors[2] = _.isEmpty(lat);
+        errors[3] = _.isEmpty(lng);
+        errors[4] = _.isEmpty(category);
 
         this.setState({ errors });
 
-        return _.every(errors);
+        return _.every(errors, (e) => e === false);
     }
 
     addLocation = () => {
@@ -55,7 +54,7 @@ class AddLocation extends Component {
         const coordinates = [lat, lng];
         const location = { name, address, coordinates, category };
 
-        if (!this.handleErrors()) {
+        if (this.handleErrors()) {
             this.props.actions.add(location);
         }
     }
@@ -91,6 +90,7 @@ class AddLocation extends Component {
                     onChange={ (e) => this.handleChange('name', e) }
                     error={ errors[0] }
                 />
+                <br />
                 <Input
                     placeholder="Address"
                     inputProps={{
@@ -99,6 +99,7 @@ class AddLocation extends Component {
                     onChange={ (e) => this.handleChange('address', e) }
                     error={ errors[1] }
                 />
+                <br />
                 <br />
                 <strong>Coordinates</strong>
                 <br />
@@ -110,6 +111,7 @@ class AddLocation extends Component {
                     onChange={ (e) => this.handleChange('lat', e) }
                     error={ errors[2] }
                 />
+                <br />
                 <Input
                     placeholder="Lng"
                     inputProps={{
@@ -134,6 +136,7 @@ class AddLocation extends Component {
                             name: 'category',
                             id: 'controlled-open-select',
                         }}
+                        error={ errors[4] }
                     >
                         { this.renderCategories() }
                     </Select>

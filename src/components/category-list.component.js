@@ -7,17 +7,29 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import InboxIcon from '@material-ui/icons/Inbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
+import CloseIcon from '@material-ui/icons/Close';
+import Button from '@material-ui/core/Button';
+import { Animated } from "react-animated-css";
 
 
 export default class CategoryList extends Component {
 
+    deleteCategory = (index) => {
+      this.props.actions.del(index);
+    }
+
     renderCategories = () => {
       const { categories } = this.props;
-      return categories.map(cat => {
-        const title = '#' + cat.id + ' - ' + cat.name;
+      return categories.map((cat, i) => {
+        const title = '#' + (i+1) + ' - ' + cat.name;
         return (
-          <ListItem key={cat.id}>
+          <ListItem key={i}>
             <ListItemText primary={title} />
+            <Animated animationIn="shake" animationOut="shake" isVisible={true}>
+              <Button onClick={ () => this.deleteCategory(i) }>
+                <CloseIcon />
+              </Button>
+            </Animated>
           </ListItem>
         ) ;
       });
@@ -38,6 +50,12 @@ export default class CategoryList extends Component {
     }
 }
 
+CategoryList.defaultProps = {
+  categories: [],
+  actions: {}
+}
+
 CategoryList.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.object),
+  actions: PropTypes.object
 };

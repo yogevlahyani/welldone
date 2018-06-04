@@ -6,9 +6,15 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import CloseIcon from '@material-ui/icons/Close';
+import Button from '@material-ui/core/Button';
 
 
 export default class LocationList extends Component {
+
+    deleteLocation = (index) => {
+        this.props.actions.del(index);
+    }
 
     renderLocations = () => {
       const { locations } = this.props;
@@ -21,6 +27,11 @@ export default class LocationList extends Component {
                 <TableCell>{loc.address}</TableCell>
                 <TableCell>LAT: {loc.coordinates[0]}, LNG: {loc.coordinates[1]}</TableCell>
                 <TableCell>{loc.category}</TableCell>
+                <TableCell>
+                    <Button onClick={ () => this.deleteLocation(i) }>
+                        <CloseIcon />
+                    </Button>
+                </TableCell>
             </TableRow>
         ) ;
       });
@@ -41,6 +52,7 @@ export default class LocationList extends Component {
                             <TableCell>Address</TableCell>
                             <TableCell>Coordinates</TableCell>
                             <TableCell>Category</TableCell>
+                            <TableCell>(Delete)</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -53,6 +65,12 @@ export default class LocationList extends Component {
     }
 }
 
+LocationList.defaultProps = {
+    locations: [],
+    actions: {}
+}
+
 LocationList.propTypes = {
   locations: PropTypes.arrayOf(PropTypes.object),
+  actions: PropTypes.object
 };

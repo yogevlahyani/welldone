@@ -11,7 +11,6 @@ class Footer extends Component {
   };
 
   handleChange = (event, value) => {
-    console.log(this.props);
     this.setState({ value });
   };
 

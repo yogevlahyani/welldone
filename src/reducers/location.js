@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import { Actions } from '../types';
 
-const defaultState = [];
+const locations = localStorage.getItem('locations');
+const defaultState = JSON.parse(locations);
 
 const Copy = (state) => {
 	return _.clone(state);
@@ -20,12 +21,22 @@ export default (state = defaultState, action) => {
 
 	switch (action.type) {
 		case Actions.LOCATION.CREATE:
-			copy = _.concat(copy, action.data);
+            copy = _.concat(copy, action.data);
+            
+            localStorage.setItem('locations', JSON.stringify(copy));
 			return copy;
 
 		case Actions.LOCATION.READ:
 			// if id show specific location .. (simulate)
 			if (action.data) { return copy; }
+
+			return copy;
+
+		case Actions.LOCATION.DELETE:
+			const index = parseInt(action.data);
+			copy.splice(index, 1);
+
+			localStorage.setItem('locations', JSON.stringify(copy));
 
 			return copy;
 
