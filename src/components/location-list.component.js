@@ -19,6 +19,10 @@ export default class LocationList extends Component {
     renderLocations = () => {
       const { locations } = this.props;
       return locations.map((loc, i) => {
+        if (!loc) {
+            return null;
+        }
+
         return (
             <TableRow key={i}>
                 <TableCell component="th" scope="row">
@@ -39,7 +43,7 @@ export default class LocationList extends Component {
 
     render() {
         const { locations } = this.props;
-        if (locations.length <= 0) { return null; }
+        if (!locations || locations.length <= 0) { return null; }
 
         return (
           <div>

@@ -21,7 +21,11 @@ export default class CategoryList extends Component {
     renderCategories = () => {
       const { categories } = this.props;
       return categories.map((cat, i) => {
-        const title = '#' + (i+1) + ' - ' + cat.name;
+        if (!cat) {
+          return null;
+        }
+
+        const title = '#' + (i) + ' - ' + cat.name;
         return (
           <ListItem key={i}>
             <ListItemText primary={title} />
@@ -37,7 +41,7 @@ export default class CategoryList extends Component {
 
     render() {
         const { categories } = this.props;
-        if (categories.length <= 0) { return null; }
+        if (!categories || categories.length <= 0) { return null; }
 
         return (
           <div>

@@ -67,11 +67,14 @@ class AddLocation extends Component {
 
     renderCategories = () => {
         const { categories } = this.props;
-        
-        return categories.map(cat => {
-            const category = JSON.stringify(cat);
+
+        return categories.map((cat, index) => {
+            if (!cat) {
+                return null;
+            }
+
             return (
-                <MenuItem value={ cat.name } key={ cat.id }>{ cat.name }</MenuItem>
+                <MenuItem value={ cat.name } key={ [cat.name, index].join('-') }>{ cat.name }</MenuItem>
             );
         });
     }
